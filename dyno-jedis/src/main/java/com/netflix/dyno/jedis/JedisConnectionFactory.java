@@ -150,7 +150,7 @@ public class JedisConnectionFactory implements ConnectionFactory<Jedis> {
 			if (result == null || result.isEmpty()) {
 				throw new DynoConnectException("Unsuccessful ping, got empty result");
 			} else if (!result.equalsIgnoreCase("pong")) {
-                                 throw new DynoConnectException("Did not receive a PONG message"); 
+                                 throw new FatalConnectionException("Did not receive a PONG message"); 
                         }
 		}
 
