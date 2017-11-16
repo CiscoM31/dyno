@@ -216,12 +216,14 @@ public class ConnectionPoolHealthTracker<CL> implements HealthTracker<CL> {
 	}
 
 	private void pingHostPool(HostConnectionPool<CL> hostPool) {
-		for (Connection<CL> connection : hostPool.getAllConnections()) {
-			try { 
-				connection.execPing();
-			} catch (DynoException e) {
-				trackConnectionError(hostPool, e);
-			}
+                Connection<CL> connection = hostPool.borrowConnection(10, TimeUnit.MILLISECONDS);
+                if (connection != null) {
+		    try { 
+			connection.execPing();
+	            } catch (DynoException e) {
+			trackConnectionError(hostPool, e);
+		    }
+                    hostPool.returnConnection(connection);
 		}
 	}
 	
