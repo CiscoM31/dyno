@@ -149,7 +149,7 @@ public class JedisConnectionFactory implements ConnectionFactory<Jedis> {
 			String result = jedisClient.ping();
                         Logger.info("Sending a ping " + result);
 			if (result == null || result.isEmpty()) {
-				throw new DynoConnectException("Unsuccessful ping, got empty result");
+				throw new FatalConnectionException("Unsuccessful ping, got empty result");
 			} else if (result.equalsIgnoreCase("pong") == false) {
                                  Logger.info("Didn't receive a pong"+result);
                                  throw new FatalConnectionException("Did not receive a PONG message"); 
